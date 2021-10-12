@@ -10,7 +10,7 @@ Config.BlipCoords = {
     {x=-840.45, y=-334.11, z=38.68},
     {x=-59.98, y=-790.45, z=44.23}
 }
-Config.BlipName = "Stock Exchange" -- Map blip name
+Config.BlipName = "Börse" -- Map blip name
 Config.BlipID = 374
 Config.BlipActive = true
 

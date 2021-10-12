@@ -25,23 +25,23 @@ Config = {
 }
 
 Strings = {
-    ['press_mine'] = 'Press ~INPUT_CONTEXT~ to mine.',
-    ['mining_info'] = 'Press ~INPUT_FRONTEND_RDOWN~ to chop, ~INPUT_FRONTEND_RRIGHT~ to stop.',
-    ['you_sold'] = 'You sold %sx %s for %s',
-    ['e_sell'] = 'Press ~INPUT_CONTEXT~ to sell all your mined items.',
-    ['someone_close'] = 'There is a player too close to you!',
-    ['mining'] = 'Mine',
-    ['sell_mine'] = 'Ore Selling',
-    ['afterexplosion'] = 'Explosion Complete. Collect Stones!',
+    ['press_mine'] = 'Drücke ~INPUT_CONTEXT~ um zu sprengen.',
+    ['mining_info'] = 'Drücke ~INPUT_FRONTEND_RDOWN~ to chop, ~INPUT_FRONTEND_RRIGHT~ to stop.',
+    ['you_sold'] = 'Du verkaufst %sx %s for %s',
+    ['e_sell'] = 'Drücke ~INPUT_CONTEXT~ um all dein Erz zu verkaufen.',
+    ['someone_close'] = 'Jemand ist im Gefahrengebiet!',
+    ['mining'] = 'Abbauen',
+    ['sell_mine'] = 'Verkaufen',
+    ['afterexplosion'] = 'Explosion erfolgreich. Baue die Steine ab!',
     
 }
 
--- Config.SellLocations = {
---     [1] = {
---         ["coords"] = {
---             ["x"] = -96.984, 
---             ["y"] = -1013.646, 
---             ["z"] = 27.275
---         }
---     }
--- }
+Config.SellLocations = {
+     [1] = {
+         ["coords"] = {
+             ["x"] = -96.984, 
+             ["y"] = -1013.646, 
+             ["z"] = 27.275
+            }
+        }
+}

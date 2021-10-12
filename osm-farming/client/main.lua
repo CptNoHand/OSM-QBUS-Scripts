@@ -1,6 +1,6 @@
 -- SCRIPT DEVELOPED BY OSMIUM | OSMFX | DISCORD.IO/OSMFX --
 
-QBCore = nil
+local QBCore = exports['qb-core']:GetCoreObject()
 isLoggedIn = false
 
 local menuOpen = false
@@ -72,12 +72,12 @@ Citizen.CreateThread(
 					for i = 1, #Config.OrangeFarm do		
 						local orangedis = GetDistanceBetweenCoords(GetEntityCoords(PlayerPedId()), Config.OrangeFarm[i], true)
 						if orangedis < 5 then 
-							Draw3DText(Config.OrangeFarm[i].x, Config.OrangeFarm[i].y, Config.OrangeFarm[i].z, '[E] - Start Picking Oranges', 4, 0.08, 0.08, Config.SecondaryColor)
+							Draw3DText(Config.OrangeFarm[i].x, Config.OrangeFarm[i].y, Config.OrangeFarm[i].z, '[E] - Orangen pflücken!', 4, 0.08, 0.08, Config.SecondaryColor)
 							if IsControlJustReleased(0, 38) and not oranges then
 								oranges = true
 								PickOrange()
 							elseif IsControlJustReleased(0, 38) and oranges then
-								QBCore.Functions.Notify('Seems Like you just got Some Oranges! Wait for a Few Seconds before Trying again!')
+								QBCore.Functions.Notify('Bleib mal entspannt!')
 							end
 						end
 					end		
@@ -102,7 +102,7 @@ Citizen.CreateThread(function()
 
 			if not isProcessing then
 				-- DrawText2D(Config.CircleZones.CornProcessing.coords.x, Config.CircleZones.CornProcessing.coords.y, Config.CircleZones.CornProcessing.coords.z, 'Press ~b~[ E ]~w~ to start packing your ~g~Weed')
-				Draw3DText(Config.CircleZones.CornProcessing.coords.x, Config.CircleZones.CornProcessing.coords.y, Config.CircleZones.CornProcessing.coords.z, '[E] - Start Processing Corn', 4, 0.08, 0.08, Config.SecondaryColor)
+				Draw3DText(Config.CircleZones.CornProcessing.coords.x, Config.CircleZones.CornProcessing.coords.y, Config.CircleZones.CornProcessing.coords.z, '[E] - Mais verarbeiten', 4, 0.08, 0.08, Config.SecondaryColor)
 			end
 
 			if IsControlJustReleased(0, 38) and not isProcessing then
@@ -115,12 +115,12 @@ Citizen.CreateThread(function()
 
 			if not isProcessing then
 				-- DrawText2D(Config.CircleZones.CornProcessing.coords.x, Config.CircleZones.CornProcessing.coords.y, Config.CircleZones.CornProcessing.coords.z, 'Press ~b~[ E ]~w~ to start packing your ~g~Weed')
-				Draw3DText(nowcoords.x, nowcoords.y,nowcoords.z, '[E] - Get a Box to Pack Items', 4, 0.08, 0.08, Config.SecondaryColor)
+				Draw3DText(nowcoords.x, nowcoords.y,nowcoords.z, '[E] - Nimm ein Karton zum verpacken', 4, 0.08, 0.08, Config.SecondaryColor)
 			end
 			if IsControlJustReleased(0, 38) and not isProcessing then
 				QBCore.Functions.TriggerCallback('QBCore:HasItem', function(result)
 					if result then
-						QBCore.Functions.Notify('You Already Have a Box!')
+						QBCore.Functions.Notify('Du hast schon ein Karton!')
 					else 
 						TriggerServerEvent('osm-farming:GivePlayerBox')
 					end
@@ -132,7 +132,7 @@ Citizen.CreateThread(function()
 			DrawMarker(27, nowcoords.x, nowcoords.y, nowcoords.z - 1 , 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 255, 0, 0, 200, 0, 0, 0, 0)
 
 			if not isProcessing then
-				Draw3DText(nowcoords.x, nowcoords.y,nowcoords.z, '[E] - Pack Oranges', 4, 0.08, 0.08, Config.SecondaryColor)
+				Draw3DText(nowcoords.x, nowcoords.y,nowcoords.z, '[E] - Verpack Orangen', 4, 0.08, 0.08, Config.SecondaryColor)
 			end
 			if IsControlJustReleased(0, 38) and not isProcessing then
 				-- QBCore.Functions.TriggerCallback('QBCore:HasItem', function(result)
@@ -149,7 +149,7 @@ Citizen.CreateThread(function()
 			DrawMarker(27, nowcoords.x, nowcoords.y, nowcoords.z - 1 , 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 255, 0, 0, 200, 0, 0, 0, 0)
 
 			if not isProcessing then
-				Draw3DText(nowcoords.x, nowcoords.y,nowcoords.z, '[E] - Prepare Milk Pack', 4, 0.08, 0.08, Config.SecondaryColor)
+				Draw3DText(nowcoords.x, nowcoords.y,nowcoords.z, '[E] - Fühle Milch in Glasflaschen!', 4, 0.08, 0.08, Config.SecondaryColor)
 			end
 			if IsControlJustReleased(0, 38) and not isProcessing then
 				-- QBCore.Functions.TriggerCallback('QBCore:HasItem', function(result)
@@ -172,18 +172,18 @@ Citizen.CreateThread(function()
 
 		elseif GetDistanceBetweenCoords(coords, Config.TractorCoords, true) < 3 then
 			if not rented then
-				Draw3DText(Config.TractorCoords.x, Config.TractorCoords.y, Config.TractorCoords.z, '[E] - Rent a Tractor for Farming', 4, 0.08, 0.08, Config.SecondaryColor)
+				Draw3DText(Config.TractorCoords.x, Config.TractorCoords.y, Config.TractorCoords.z, '[E] - Traktor mieten', 4, 0.08, 0.08, Config.SecondaryColor)
 			end
 			if rented then 
-				Draw3DText(Config.TractorCoords.x, Config.TractorCoords.y, Config.TractorCoords.z, '[E] - Return Tractor', 4, 0.08, 0.08, Config.SecondaryColor)
+				Draw3DText(Config.TractorCoords.x, Config.TractorCoords.y, Config.TractorCoords.z, '[E] - Traktor zurückgeben', 4, 0.08, 0.08, Config.SecondaryColor)
 			end
 
 			if IsControlJustReleased(0, 38) and not rented then
-				QBCore.Functions.Notify('You Rented a Truck for Farming!', 'success', 5000) -- [text] = message, [type] = primary | error | success, [length] = time till fadeout.
+				QBCore.Functions.Notify('Du hast den Traktor gemietet!', 'success', 5000) -- [text] = message, [type] = primary | error | success, [length] = time till fadeout.
 				TriggerServerEvent('osm-farming:server:SpawnTractor')
 			end
 			if IsControlJustReleased(0, 38) and rented then
-				QBCore.Functions.Notify('You Returned the Rented Vehicle', 'success', 5000) -- [text] = message, [type] = primary | error | success, [length] = time till fadeout.
+				QBCore.Functions.Notify('Du hast den Traktor zurückgegeben!', 'success', 5000) -- [text] = message, [type] = primary | error | success, [length] = time till fadeout.
 				TriggerServerEvent('Server:UnRentTractor')
 			end
 		else
@@ -208,7 +208,7 @@ Citizen.CreateThread(function()
 					if not sellItemsSet then 
 						sellPrice = GetSellingPrice()
 						sellItemsSet = true
-					elseif sellItemsSet and sellPrice ~= 0 then
+					elseif sellItemsSet and sellPrice ~= 5 then
 						DrawText3D(Config.SellLocation.x, Config.SellLocation.y, Config.SellLocation.z, "~g~E~w~ - Sell Farmed Items (€"..sellPrice..")")
 						if IsControlJustReleased(0, 38) then
 							TaskStartScenarioInPlace(GetPlayerPed(-1), "WORLD_HUMAN_STAND_IMPATIENT", 0, true)
@@ -219,7 +219,7 @@ Citizen.CreateThread(function()
 								sellPrice = 0
                             end, function() -- Cancel
 								ClearPedTasks(GetPlayerPed(-1))
-								QBCore.Functions.Notify("Canceled..", "error")
+								QBCore.Functions.Notify("Abgebrochen..", "error")
 							end)
 						end
 					else
@@ -330,7 +330,7 @@ Citizen.CreateThread(function()
 			if not isPickingUp then
 				-- DrawText2D(0.4, 0.8, '~w~Press ~g~[E]~w~ to Pickup Corn')
 				local coord1 = GetEntityCoords(nearbyObject)
-				Draw3DText(coord1.x, coord1.y, coord1.z + 1.5, '[E] - Pick Up Corn Kernel', 4, 0.08, 0.08, Config.SecondaryColor)
+				Draw3DText(coord1.x, coord1.y, coord1.z + 1.5, '[E] - Pflücke Maiskolben!', 4, 0.08, 0.08, Config.SecondaryColor)
 			end
 
 			if IsControlJustReleased(0, 38) and not isPickingUp then
@@ -339,7 +339,7 @@ Citizen.CreateThread(function()
 
 				-- QBCore.Functions.Notify("Picking up Corn Kernel!", "error", 10000)
 				-- exports['progressBars']:startUI(5000, "Picking up Corn Kernel!")
-				QBCore.Functions.Progressbar("search_register", "Picking up Corn Kernel!", 5000, false, true, {
+				QBCore.Functions.Progressbar("search_register", "Aufheben von Maiskolben!", 5000, false, true, {
 					disableMovement = true,
 					disableCarMovement = true,
 					disableMouse = false,
@@ -369,7 +369,7 @@ Citizen.CreateThread(function()
 
 			if not isPickingUp then
 				local coord = GetEntityCoords(trackspots[spotID])
-				Draw3DText(coord.x, coord.y, coord.z + 1.5, '[E] - Mow the Field', 4, 0.2, 0.2, Config.SecondaryColor)
+				Draw3DText(coord.x, coord.y, coord.z + 1.5, '[E] - Pflügen', 4, 0.2, 0.2, Config.SecondaryColor)
 			end
 
 			if IsControlJustReleased(0, 38) then					
@@ -379,7 +379,7 @@ Citizen.CreateThread(function()
 
 					if #trackspots == 0 then 
 						water = true
-						QBCore.Functions.Notify('Field Mowing is now Complete! Start Water Supply!', 'success', 6000)
+						QBCore.Functions.Notify('Das Feld ist vorbereitet, starte die Bewässerung!', 'success', 6000)
 						Citizen.Wait(100) -- For Variable Defining Delay
 						WaterStart()
 					end
@@ -409,7 +409,7 @@ Citizen.CreateThread(function()
 
 			if not isPickingUp then
 				local coord1 = GetEntityCoords(nearbycow)
-				Draw3DText(coord1.x, coord1.y, coord1.z + 1.5, '[E] - Milk The Cow', 4, 0.07, 0.07, Config.SecondaryColor)
+				Draw3DText(coord1.x, coord1.y, coord1.z + 1.5, '[E] - Kuh melken', 4, 0.07, 0.07, Config.SecondaryColor)
 			end
 
 			if IsControlJustReleased(0, 38) and not isPickingUp then
@@ -418,7 +418,7 @@ Citizen.CreateThread(function()
 					TaskStartScenarioInPlace(playerPed, "PROP_HUMAN_PARKING_METER", 0, true)
 					MilkCow(nearbycow)
 				else
-					QBCore.Functions.Notify('You failed to get Milk from the Cow! Try again Later!')
+					QBCore.Functions.Notify('Du hast kein Erfolg, versuche es nochmal!')
 				end
 			end
 		else
@@ -570,7 +570,7 @@ function PickOrange()
 		end
     end
 
-	QBCore.Functions.Progressbar("search_register", "Picking Up oranges!", 15000, false, true, {
+	QBCore.Functions.Progressbar("search_register", "Orangen pflücken!", 15000, false, true, {
 		disableMovement = true,
 		disableCarMovement = true,
 		disableMouse = false,
@@ -591,17 +591,17 @@ function WaterStart()
 		local h = GetDistanceBetweenCoords(GetEntityCoords(PlayerPedId()), Config.CircleZones.Water.coords, true)
 		if water then 
 			if h < 5 then
-					Draw3DText(Config.CircleZones.Water.coords.x, Config.CircleZones.Water.coords.y, Config.CircleZones.Water.coords.z, '[E] - Start Water Supply', 4, 0.08, 0.08, Config.SecondaryColor)
+					Draw3DText(Config.CircleZones.Water.coords.x, Config.CircleZones.Water.coords.y, Config.CircleZones.Water.coords.z, '[E] - Starte Bewässerung', 4, 0.08, 0.08, Config.SecondaryColor)
 				if IsControlJustReleased(0, 38) then
 					TaskStartScenarioInPlace(playerPed, "PROP_HUMAN_PARKING_METER", 0, true)
-					QBCore.Functions.Progressbar("search_register", "Starting Water Supply for the Field!", 15000, false, true, {
+					QBCore.Functions.Progressbar("search_register", "Starte Feld Bewässerung!", 15000, false, true, {
 						disableMovement = true,
 						disableCarMovement = true,
 						disableMouse = false,
 						disableCombat = true,
 					}, {}, {}, {}, function() -- Done
 						SpawnCornPlants()
-						QBCore.Functions.Notify('Water Supply has Started! Plants should Start Growing!', 'success', 6000)
+						QBCore.Functions.Notify('Bewässerung gestartet, Das Feld wächst!', 'success', 6000)
 						water = false
 					end, function()
 						ClearPedTasks(PlayerPedId())

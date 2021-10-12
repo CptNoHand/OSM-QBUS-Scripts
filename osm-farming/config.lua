@@ -13,7 +13,7 @@ Config.CornOutput = math.random(2,4)
 
 Config.MowProp = 'prop_air_lights_02b'
 
-Config.SellLocation =  {x = -505.36, y = -695.75, z = 20.03}
+Config.SellLocation =  {x = 1197.15, y = -3253.66, z = 7.1}
 
 Config.Tractor = 'tractor3'
 Config.TractorCoords = vector3(2229.3820800781, 5605.5327148438, 54.872543334961)
@@ -55,9 +55,21 @@ Config.ItemList = {
     ["orange"] = math.random(10, 20),
     ["milk"] = math.random(15, 25),
 	["corn_kernel"] = math.random(15, 20),
-    ["corn_packet"] = math.random(150, 200),
-    ["milk_pack"] = math.random(100, 300),
-	["fruit_pack"] = math.random(150, 350),
+    ["corn_packet"] = math.random(10, 20),
+    ["milk_pack"] = math.random(10, 25),
+	["fruit_pack"] = math.random(20, 30),
+    ["diamond"] = math.random(20, 40),
+    ["emerald"] = math.random(20, 30),
+    ["ironplate"] = math.random(8, 16),
+    ["rubber"] = math.random(6, 9),
+    ["steel"] = math.random(6, 9),
+    ["iron"] = math.random(6, 9),
+    ["aluminum"] = math.random(6, 9),
+    ["copper"] = math.random(6, 9),
+    ["metalscrap"] = math.random(6, 9),
+    ["plastic"] = math.random(6, 9),
+    ["weed_nutrition"] = math.random(1, 2),
+	["raw_gold"] = math.random(2, 6),
 }
 
 Config.Blips = {
@@ -65,5 +77,5 @@ Config.Blips = {
 	{title="Corn Farm Supply", colour=16, id=140, x = 2041.5297851562, y = 4854.5625, z= 43.097927093506},
 	{title="Braddock Farm", colour=16, id=140, x = 2195.4331054688, y = 5602.6352539062, z = 53.584144592285},
 	{title="Orange Farm", colour=16, id=103, x = 346.62341308594, y = 6522.9448242188, z = 28.830759048462},
+	{title="Export", colour=16, id=374, x = 1197.15000000000, y = -3253.66000000000, z = 7.10000000000},
 }
-

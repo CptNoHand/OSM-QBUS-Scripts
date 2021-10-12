@@ -3,7 +3,7 @@
 --------------------
 -- QBCore Core Stuff --
 --------------------
-QBCore = nil
+local QBCore = exports['qb-core']:GetCoreObject()
 
 Citizen.CreateThread(function()
     while QBCore == nil do
@@ -49,9 +49,9 @@ Citizen.CreateThread(function()
 
                         while mining and not exploded do
                             -- Wait(1000)
-                            local time = 6
+                            local time = 10
 							while time > 0 do 
-								QBCore.Functions.Notify("Blast in about " .. time .. "..")
+								QBCore.Functions.Notify("Explodiert in " .. time .. "..")
 								Citizen.Wait(1000)
 								time = time - 1
 							end
@@ -82,7 +82,7 @@ Citizen.CreateThread(function()
             if GetDistanceBetweenCoords(GetEntityCoords(rock1), GetEntityCoords(player), true) <= 2.5 then
                 sleep = 5
                 local rpos = GetEntityCoords(rock1)
-                QBCore.Functions.DrawText3D(rpos.x, rpos.y, rpos.z,'Press ~g~[ E ]~w~ to Break the Piece of Rock')
+                QBCore.Functions.DrawText3D(rpos.x, rpos.y, rpos.z,'Drücke ~g~[ E ]~w~ um den Fels zu brechen!')
                 if IsControlJustPressed(0, 38) then
                     
                     local model = loadModel(GetHashKey(Config.Objects['drill']))
@@ -129,7 +129,7 @@ Citizen.CreateThread(function()
 		local dist = #(vector3(playercoords.x,playercoords.y,playercoords.z)-vector3(washcords.x,washcords.y,washcords.z))
 		if dist <= 3 and not isWashing then
 			sleep = 5
-			DrawText3D(washcords.x, washcords.y, washcords.z, 'Press [ E ] to Wash a Stone')
+			DrawText3D(washcords.x, washcords.y, washcords.z, 'Drücke [ E ] um den Stein zu waschen!')
 			if IsControlJustPressed(1, 51) then
 				isWashing = true
 				QBCore.Functions.TriggerCallback('QBCore:HasItem', function(result)
@@ -139,7 +139,7 @@ Citizen.CreateThread(function()
                             AttachEntityToEntity(stone, PlayerPedId(), GetPedBoneIndex(PlayerPedId(), 60309), 0.09, 0.03, -0.02, 0.0, 0.0, 0.0, false, true, true, true, 0, true)
                             washing()
                         else
-                            QBCore.Functions.Notify("You don't have material", "error")
+                            QBCore.Functions.Notify("Du hast keine Matrerialien", "error")
                             isWashing = false
                         end
 				end, 'stone')
@@ -160,14 +160,14 @@ Citizen.CreateThread(function()
 		local dist = #(vector3(playercoords.x,playercoords.y,playercoords.z)-vector3(process.x,process.y,process.z))
 		if dist <= 3 and not isProcess then
 			sleep = 5
-			DrawText3D(process.x, process.y, process.z, 'Press [ E ] to Process Washed Stone')
+			DrawText3D(process.x, process.y, process.z, 'Drücke [ E ] um Steine zu brechen!')
 			if IsControlJustPressed(1, 51) then
 				isProcess = true
 				QBCore.Functions.TriggerCallback('QBCore:HasItem', function(result)
                         if result then
                             processing()  
                         else
-                            QBCore.Functions.Notify("You don't have Washed Stones", "error")
+                            QBCore.Functions.Notify("Du hast keine gewaschene Steine mehr", "error")
                             isProcess = false
                         end
 				end, 'washedstone')
@@ -188,7 +188,7 @@ function washing()
     TaskPlayAnim((player), 'amb@prop_human_bum_bin@idle_a', 'idle_a', 8.0, 8.0, -1, 81, 0, 0, 0, 0)
     helpText(Strings['warning'])
     
-	QBCore.Functions.Progressbar("wash-", "Washing Stones..", 5000, false, true, {
+	QBCore.Functions.Progressbar("wash-", "Steine waschen..", 5000, false, true, {
 		disableMovement = true,
 		disableCarMovement = true,
 		disableMouse = false,
@@ -201,7 +201,7 @@ function washing()
                 DeleteObject(stone)
                 isWashing = false
             else
-                QBCore.Functions.Notify("You don't have the material", "error")
+                QBCore.Functions.Notify("Du hast keine Materialien mehr!", "error")
                 DeleteObject(stone)
                 isWashing = false
             end
@@ -225,7 +225,7 @@ function processing()
     TaskPlayAnim((player), 'amb@prop_human_bum_bin@idle_a', 'idle_a', 8.0, 8.0, -1, 81, 0, 0, 0, 0)
     helpText(Strings['warning'])
     
-	QBCore.Functions.Progressbar("wash-", "Processing..", 10000, false, true, {
+	QBCore.Functions.Progressbar("wash-", "Verarbeiten..", 10000, false, true, {
 		disableMovement = true,
 		disableCarMovement = true,
 		disableMouse = false,
@@ -237,7 +237,7 @@ function processing()
                 TriggerServerEvent('osm-mining:getItemNew')
                 isProcess = false
             else
-                QBCore.Functions.Notify("You don't have Washed Stones", "error")
+                QBCore.Functions.Notify("Du hast keine gewaschene Steine mehr!", "error")
                 isProcess = false
             end
         end, 'washedstone')
@@ -251,15 +251,15 @@ function processing()
 end
 
 Citizen.CreateThread(function()
-    local blip1 = AddBlipForCoord(washcords.x, washcords.y, washcords.z)
-	SetBlipSprite(blip, 527)
+    local blip = AddBlipForCoord(washcords.x, washcords.y, washcords.z)
+	SetBlipSprite(blip, 467)
 	SetBlipDisplay(blip, 4)
 	SetBlipScale(blip, 0.6)
 	SetBlipAsShortRange(blip, true)
 	SetBlipColour(blip, 5)
 	BeginTextCommandSetBlipName("STRING")
-	AddTextComponentSubstringPlayerName("Mining - Wash and Process")
-    EndTextCommandSetBlipName(blip1)
+	AddTextComponentSubstringPlayerName("Minen Verarbeitung ")
+    EndTextCommandSetBlipName(blip)
 end)
 
 Citizen.CreateThread(function()
@@ -270,7 +270,7 @@ Citizen.CreateThread(function()
 	SetBlipAsShortRange(blip, true)
 	SetBlipColour(blip, 5)
 	BeginTextCommandSetBlipName("STRING")
-	AddTextComponentSubstringPlayerName("Mining")
+	AddTextComponentSubstringPlayerName("Steinbruch")
     EndTextCommandSetBlipName(blip)
 end)
 

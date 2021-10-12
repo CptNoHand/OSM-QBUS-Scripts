@@ -4,7 +4,7 @@
 --------------------------------------------------
 
 
-QBCore = nil
+local QBCore = exports['qb-core']:GetCoreObject()
 Cache = {}
 TriggerEvent('QBCore:GetObject', function(obj) QBCore = obj end)
 

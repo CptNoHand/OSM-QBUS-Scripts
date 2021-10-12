@@ -1,5 +1,5 @@
 -- SCRIPT DEVELOPED BY OSMIUM | OSMFX | DISCORD.IO/OSMFX --
-QBCore = nil
+local QBCore = exports['qb-core']:GetCoreObject()
 
 TriggerEvent('QBCore:GetObject', function(obj) QBCore = obj end)
 
@@ -10,7 +10,7 @@ AddEventHandler('osm-farming:pickedUpCannabis', function()
 	local src = source
 	local Player = QBCore.Functions.GetPlayer(src)
 
-	  if TriggerClientEvent("QBCore:Notify", src, "Picked up some Corn Kernels!!", "Success", 3000) then
+	  if TriggerClientEvent("QBCore:Notify", src, "Maiskolben gepflückt!!", "Success", 3000) then
 		  Player.Functions.AddItem('corn_kernel', Config.CornOutput) ---- change this shit 
 		  TriggerClientEvent("inventory:client:ItemBox", source, QBCore.Shared.Items['corn_kernel'], "add")
 	  end
@@ -41,7 +41,7 @@ AddEventHandler("osm-farming:server:SellFarmingItems", function()
             end
         end
         Player.Functions.AddMoney("cash", price, "sold-farm-items")
-        TriggerClientEvent('QBCore:Notify', src, "You have sold your items for"..price)
+        TriggerClientEvent('QBCore:Notify', src, "Verkauft für"..price)
     end
 end)
 
@@ -50,9 +50,15 @@ AddEventHandler('osm-farming:CowMilked', function()
 	local src = source
 	local Player = QBCore.Functions.GetPlayer(src)
 
-	  if TriggerClientEvent("QBCore:Notify", src, "You got some Milk!", "Success", 4000) then
+	  if TriggerClientEvent("QBCore:Notify", src, "Du hast Milch bekommen!", "Success", 4000) then
 		  Player.Functions.AddItem('milk', Config.MilkOutput) ---- change this shit 
 		  TriggerClientEvent("inventory:client:ItemBox", source, QBCore.Shared.Items['milk'], "add")
+	  end
+	  
+	  local chance = math.random(1, 100)
+	  if chance < 3 then
+		  Player.Functions.AddItem("weed_nutrition", 1, false)
+		  TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["weed_nutrition"], "add")
 	  end
 end)
 
@@ -66,15 +72,15 @@ AddEventHandler('osm-farming:ProcessCorn', function()
 			if item.amount > 4 then 
 				Player.Functions.RemoveItem('corn_kernel', 4)----change this
 				Player.Functions.RemoveItem('box', 1)----change this
-				Player.Functions.AddItem('corn_pack', 1)----change this
+				Player.Functions.AddItem('corn_packet', 1)----change this
 				TriggerClientEvent("inventory:client:ItemBox", source, QBCore.Shared.Items['corn_kernel'], "remove")
-				TriggerClientEvent("inventory:client:ItemBox", source, QBCore.Shared.Items['corn_pack'], "add")
-				TriggerClientEvent('QBCore:Notify', src, 'You made a Corn Packet!', "success")   
+				TriggerClientEvent("inventory:client:ItemBox", source, QBCore.Shared.Items['corn_packet'], "add")
+				TriggerClientEvent('QBCore:Notify', src, 'Du hast ein Maispaket hergestellt!', "success")   
 			else 
-				TriggerClientEvent('QBCore:Notify', src, 'You need atleast 4 Corn Kernels!', "success")   
+				TriggerClientEvent('QBCore:Notify', src, 'Du benötigst 4 Maiskolben!', "success")   
 			end     
 		else    
-			TriggerClientEvent('QBCore:Notify', src, 'You need atleast 4 Corn Kernels!', "success")   
+			TriggerClientEvent('QBCore:Notify', src, 'Du benötigst 4 Maiskolben!', "success")   
 		end                                                                				
 end)
 
@@ -92,12 +98,12 @@ AddEventHandler('osm-farming:ProcessOranges', function()
 				Player.Functions.AddItem('fruit_pack', 1)----change this
 				TriggerClientEvent("inventory:client:ItemBox", source, QBCore.Shared.Items['orange'], "remove")
 				TriggerClientEvent("inventory:client:ItemBox", source, QBCore.Shared.Items['fruit_pack'], "add")
-				TriggerClientEvent('QBCore:Notify', src, 'You made a Fruit Pack!', "success")   
+				TriggerClientEvent('QBCore:Notify', src, 'Du hast ein Fruchtkorb hergestellt!', "success")   
 			else 
-				TriggerClientEvent('QBCore:Notify', src, 'You need atleast 10 Oranges!', "success")   
+				TriggerClientEvent('QBCore:Notify', src, 'Du benötigst 10 Orangen!', "success")   
 			end     
 		else    
-			TriggerClientEvent('QBCore:Notify', src, 'You need atleast 10 Oranges!', "success")   
+			TriggerClientEvent('QBCore:Notify', src, 'Du benötigst 10 Orangen!', "success")   
 		end                                                                				
 end)
 
@@ -114,12 +120,12 @@ AddEventHandler('osm-farming:ProcessMilk', function()
 				Player.Functions.AddItem('milk_pack', 1)----change this
 				TriggerClientEvent("inventory:client:ItemBox", source, QBCore.Shared.Items['milk'], "remove")
 				TriggerClientEvent("inventory:client:ItemBox", source, QBCore.Shared.Items['milk_pack'], "add")
-				TriggerClientEvent('QBCore:Notify', src, 'You made a Milk Carton!', "success")   
+				TriggerClientEvent('QBCore:Notify', src, 'Du hast ein Milch Karton hergestellt!', "success")   
 			else 
-				TriggerClientEvent('QBCore:Notify', src, 'You need atleast 5 Milk!!', "success")   
+				TriggerClientEvent('QBCore:Notify', src, 'Du benötigst 5 Milch!!', "success")   
 			end     
 		else    
-			TriggerClientEvent('QBCore:Notify', src, 'You need atleast 5 Milk!', "success")   
+			TriggerClientEvent('QBCore:Notify', src, 'Du benötigst 5 Milch!', "success")   
 		end                                                                				
 end)
 
@@ -133,7 +139,7 @@ AddEventHandler('osm-farming:server:SpawnTractor', function()
 			Player.Functions.RemoveMoney('cash', Config.TractorRent) 
 			TriggerClientEvent('SpawnTractor', src)
 		else
-			TriggerClientEvent('QBCore:Notify', src, 'You need $'..Config.TractorRent..' Cash to Rent a Tractor', "success")   
+			TriggerClientEvent('QBCore:Notify', src, 'Du brauchst $'..Config.TractorRent..' um den Traktor zu leihen', "success")   
 		end
 end)
 
@@ -142,7 +148,7 @@ AddEventHandler('osm-farming:GiveOranges', function()
 		local src = source
     	local Player = QBCore.Functions.GetPlayer(src)
 		Player.Functions.AddItem('orange', math.random(4, 7))----change this
-		TriggerClientEvent('QBCore:Notify', src, 'You got a few oranges from the Tree!', "success")                                                                         				
+		TriggerClientEvent('QBCore:Notify', src, 'Du hast Orangen vom Baum gepflückt!', "success")                                                                         				
 end)
 
 RegisterServerEvent('Server:UnRentTractor')
@@ -176,7 +182,7 @@ AddEventHandler('osm-farming:onPlayerDeath', function(data)
 end)
 
 QBCore.Functions.CreateCallback('osm-farming:server:GetSellingPrice', function(source, cb)
-    local retval = 0
+    local retval = 5
     local Player = QBCore.Functions.GetPlayer(source)
     if Player.PlayerData.items ~= nil and next(Player.PlayerData.items) ~= nil then 
         for k, v in pairs(Player.PlayerData.items) do 
