@@ -1,4 +1,4 @@
-fx_version 'bodacious'
+fx_version 'cerulean'
 game 'gta5'
 
 author '! POLYGON#5788'
@@ -7,10 +7,6 @@ description 'Invest in companies'
 version '0.1'
 
 ui_page 'client/html/UI.html'
-
-dependencies {
-    'mysql-async'
-}
 
 server_scripts {
 	'locales/main.lua',

@@ -1,5 +1,3 @@
-USE `brp`;
-
 CREATE TABLE `invest` (
   `id` int(11) NOT NULL,
   `identifier` varchar(40) COLLATE utf8mb4_bin NOT NULL,

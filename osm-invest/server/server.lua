@@ -14,11 +14,11 @@ AddEventHandler("invest:balance", function()
     local src = source
     local xPlayer = QBCore.Functions.GetPlayer(src)
     local id = xPlayer.PlayerData.citizenid
-    local user = MySQL.Sync.fetchAll('SELECT `amount` FROM `invest` WHERE `identifier`=@id AND active=1', {["@id"] = id})
+    local user = exports.oxmysql:fetchSync('SELECT `amount` FROM `invest` WHERE `citizenid`=@id AND active=1', {["@id"] = id})
     local invested = 0
     local plname = ''..xPlayer.PlayerData.charinfo.firstname..' '..xPlayer.PlayerData.charinfo.lastname..''
     for k, v in pairs(user) do
-        -- print(k, v.identifier, v.amount, v.job)
+        -- print(k, v.citizenid, v.amount, v.job)
         invested = invested + v.amount
     end
     TriggerClientEvent("invest:nui", src, {
@@ -44,17 +44,17 @@ AddEventHandler("invest:all", function(special)
     local xPlayer = QBCore.Functions.GetPlayer(src)
     local sql = 'SELECT `invest`.*, `companies`.`name`,`companies`.`investRate`,`companies`.`label` FROM `invest` '..
                 'INNER JOIN `companies` ON `invest`.`job` = `companies`.`label` '..
-                'WHERE `invest`.`identifier`=@id'
+                'WHERE `invest`.`citizenid`=@id'
 
     if(special) then 
         sql = sql .. " AND `invest`.`active`=1"
     end
 
     local id = xPlayer.PlayerData.citizenid
-    local user =  MySQL.Sync.fetchAll(sql, {["@id"] = id})
+    local user =  exports.oxmysql:fetchSync(sql, {["@id"] = id})
 
     -- for k, v in pairs(user) do
-    --     print(k, v.identifier, v.amount, v.job, v.name, v.active, v.created, v.investRate)
+    --     print(k, v.citizenid, v.amount, v.job, v.name, v.active, v.created, v.investRate)
     -- end
 
     if(special) then
@@ -79,7 +79,7 @@ AddEventHandler("invest:buy", function(job, amount, rate)
     local id = xPlayer.PlayerData.citizenid
     amount = tonumber(amount)
 
-    local inf = MySQL.Sync.fetchAll('SELECT * FROM `invest` WHERE `identifier`=@id AND active=1 AND job=@job LIMIT 1', {["@id"] = id, ['@job'] = job})
+    local inf = exports.oxmysql:fetchSync('SELECT * FROM `invest` WHERE `citizenid`=@id AND active=1 AND job=@job LIMIT 1', {["@id"] = id, ['@job'] = job})
     for k, v in pairs(inf) do inf = v end
 
     if(amount == nil or amount <= 0) then
@@ -98,7 +98,7 @@ AddEventHandler("invest:buy", function(job, amount, rate)
             print("Adding money to an existing investment")
         end
 
-        MySQL.Sync.execute("UPDATE `invest` SET amount=amount+@num WHERE `identifier`=@id AND active=1 AND job=@job", {["@id"] =  id, ["@num"]=amount, ['@job'] = job})
+        exports.oxmysql:execute("UPDATE `invest` SET amount=amount+@num WHERE `citizenid`=@id AND active=1 AND job=@job", {["@id"] =  id, ["@num"]=amount, ['@job'] = job})
         
         TriggerClientEvent('QBCore:Notify', src, _U('added'))
     else
@@ -110,7 +110,7 @@ AddEventHandler("invest:buy", function(job, amount, rate)
             return TriggerClientEvent('QBCore:Notify', src, _U('unexpected_error'))
         end
 
-        MySQL.Sync.execute("INSERT INTO `invest` (identifier, job, amount, rate) VALUES (@id, @job, @amount, @rate)", {
+        exports.oxmysql:insert("INSERT INTO `invest` (citizenid, job, amount, rate) VALUES (@id, @job, @amount, @rate)", {
             ["@id"] = id,
             ["@job"] = job,
             ["@amount"] = amount,
@@ -131,9 +131,9 @@ AddEventHandler("invest:sell", function(job)
 
     local id = xPlayer.PlayerData.citizenid
 
-    local result = MySQL.Sync.fetchAll( 'SELECT `invest`.*, `companies`.`investRate` FROM `invest` '..
+    local result = exports.oxmysql:fetchSync( 'SELECT `invest`.*, `companies`.`investRate` FROM `invest` '..
                                             'INNER JOIN `companies` ON `invest`.`job` = `companies`.`label` '..
-                                            'WHERE `identifier`=@id AND active=1 AND job=@job', {["@id"] = id, ['@job'] = job})
+                                            'WHERE `citizenid`=@id AND active=1 AND job=@job', {["@id"] = id, ['@job'] = job})
     for k, v in pairs(result) do result = v end
 
     local amount = result.amount
@@ -145,7 +145,7 @@ AddEventHandler("invest:sell", function(job)
     -- print("intrest calc: " .. result.investRate .. " -> " .. result.rate .. " = " .. sellRate)
     -- print("money calc: " .. amount .. " -> " .. addMoney)
 
-    MySQL.Sync.execute("UPDATE `invest` SET active=0, sold=now(), soldAmount=@money, rate=@rate WHERE `id`=@id", {["@id"] = result.id, ["@money"] = addMoney, ["@rate"] =  sellRate})
+    exports.oxmysql:execute("UPDATE `invest` SET active=0, sold=now(), soldAmount=@money, rate=@rate WHERE `id`=@id", {["@id"] = result.id, ["@money"] = addMoney, ["@rate"] =  sellRate})
 
     if(addMoney > 0) then
         xPlayer.Functions.AddMoney('bank', addMoney)
@@ -178,7 +178,7 @@ AddEventHandler('onResourceStart', function(resourceName)
             print("Creating new investments")
         end
 
-        local companies = MySQL.Sync.fetchAll("SELECT * FROM `companies`")
+        local companies = exports.oxmysql:fetchSync("SELECT * FROM `companies`")
         for k, v in pairs(companies) do
             newRate = genRand(Config.Stock.Minimum, Config.Stock.Maximum, 2)
 
@@ -190,14 +190,14 @@ AddEventHandler('onResourceStart', function(resourceName)
             end
 
             if(Config.Stock.Lost ~= 0 and newRate < 0) then
-                MySQL.Sync.execute("UPDATE `invest` SET amount=(amount/100*(100-@lost)) WHERE active=1 AND job=@label", {
+                exports.oxmysql:execute("UPDATE `invest` SET amount=(amount/100*(100-@lost)) WHERE active=1 AND job=@label", {
                     ["@label"] = v.label,
                     ["@lost"] = Config.Stock.Lost
                 })
             end
 
             
-            MySQL.Sync.execute("UPDATE `companies` SET investRate=@invest, rate=@rate WHERE label=@label", {
+            exports.oxmysql:execute("UPDATE `companies` SET investRate=@invest, rate=@rate WHERE label=@label", {
                 ["@invest"] = newRate,
                 ["@label"] = v.label,
                 ["@rate"] = rate
@@ -213,12 +213,12 @@ AddEventHandler('onResourceStart', function(resourceName)
         print("Powering Up")
     end
 
-    local companies = MySQL.Sync.fetchAll("SELECT * FROM `companies`")
+    local companies = exports.oxmysql:fetchSync("SELECT * FROM `companies`")
     for k, v in pairs(companies) do
         if(v.investRate == nil) then
             v.investRate = genRand(Config.Stock.Minimum, Config.Stock.Maximum, 2)
 
-            MySQL.Sync.execute("UPDATE companies SET investRate=@rate WHERE label=@label", {
+            exports.oxmysql:execute("UPDATE companies SET investRate=@rate WHERE label=@label", {
                 ["@rate"] = v.investRate,
                 ["@label"] = v.label
             })
