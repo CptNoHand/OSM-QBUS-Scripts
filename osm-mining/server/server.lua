@@ -19,7 +19,7 @@ RegisterServerEvent('osm-mining:getStone')
 AddEventHandler('osm-mining:getStone', function()
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
-    local amount = math.random(2,3)  
+    local amount = math.random(1,2)  
     if Player ~= nil then   
         Player.Functions.AddItem('stone', amount)   ----chnage these to give different amounts once completed mining
         TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items['stone'], 'add')
@@ -42,11 +42,11 @@ end)
 ---price of items to sell
 
 local ItemList = {
-    ["steel"] = math.random(6, 14),
-    ["copper"] = math.random(6, 15),
-    ["aluminum"] = math.random(5, 12),
-    ["iron"] = math.random(9, 14),
-    ["metalscrap"] = math.random(6, 14),
+    ["steel"] = math.random(4, 10),
+    ["copper"] = math.random(4, 12),
+    ["aluminum"] = math.random(5, 10),
+    ["iron"] = math.random(6, 12),
+    ["metalscrap"] = math.random(4, 12),
 
 }
 

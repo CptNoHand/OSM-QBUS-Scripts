@@ -50,8 +50,8 @@ AddEventHandler('osm-farming:CowMilked', function()
 	local src = source
 	local Player = QBCore.Functions.GetPlayer(src)
 
-	  if TriggerClientEvent("QBCore:Notify", src, "Du hast Milch bekommen!", "Success", 4000) then
-		  Player.Functions.AddItem('milk', Config.MilkOutput) ---- change this shit 
+	  if TriggerClientEvent("QBCore:Notify", src, "Du hast Milch bekommen!", "Success", 2000) then
+		  Player.Functions.AddItem('milk', math.random(1, 3))----change this
 		  TriggerClientEvent("inventory:client:ItemBox", source, QBCore.Shared.Items['milk'], "add")
 	  end
 	  
@@ -147,7 +147,7 @@ RegisterServerEvent('osm-farming:GiveOranges')
 AddEventHandler('osm-farming:GiveOranges', function()
 		local src = source
     	local Player = QBCore.Functions.GetPlayer(src)
-		Player.Functions.AddItem('orange', math.random(4, 7))----change this
+		Player.Functions.AddItem('orange', math.random(1, 4))----change this
 		TriggerClientEvent('QBCore:Notify', src, 'Du hast Orangen vom Baum gepflückt!', "success")                                                                         				
 end)
 

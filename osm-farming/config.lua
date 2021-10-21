@@ -9,7 +9,7 @@ Config.Delays = {
 }
 
 Config.CornPlant = 'prop_plant_01a'
-Config.CornOutput = math.random(2,4)
+Config.CornOutput = math.random(1,3)
 
 Config.MowProp = 'prop_air_lights_02b'
 
@@ -22,7 +22,7 @@ Config.TractorSpawnHeading = 349
 Config.TractorRent = 2500
 
 Config.CowProp = 'a_c_cow'
-Config.MilkOutput = math.random(2,4)
+Config.MilkOutput = math.random(1,3)
 
 Config.PrimaryColor = {r = 51, g = 136, b = 255, a = 255} -- Use RGB color picker
 Config.SecondaryColor = {r = 33, g = 244, b = 218, a = 255} -- Use RGB color picker	
@@ -52,15 +52,15 @@ Config.OrangeFarm = {
 -- Config.GasSupply = vector3(2304.0451660156,4830.3271484375,50.071781158447)
 
 Config.ItemList = {
-    ["orange"] = math.random(10, 20),
-    ["milk"] = math.random(15, 25),
-	["corn_kernel"] = math.random(15, 20),
-    ["corn_packet"] = math.random(10, 20),
-    ["milk_pack"] = math.random(10, 25),
-	["fruit_pack"] = math.random(20, 30),
-    ["diamond"] = math.random(20, 40),
-    ["emerald"] = math.random(20, 30),
-    ["ironplate"] = math.random(8, 16),
+    ["orange"] = math.random(6, 12),
+    ["milk"] = math.random(8, 15),
+	["corn_kernel"] = math.random(8, 15),
+    ["corn_packet"] = math.random(8, 12),
+    ["milk_pack"] = math.random(8, 12),
+	["fruit_pack"] = math.random(8, 12),
+    ["diamond"] = math.random(12, 20),
+    ["emerald"] = math.random(12, 18),
+    ["ironplate"] = math.random(6, 12),
     ["rubber"] = math.random(6, 9),
     ["steel"] = math.random(6, 9),
     ["iron"] = math.random(6, 9),
@@ -69,7 +69,7 @@ Config.ItemList = {
     ["metalscrap"] = math.random(6, 9),
     ["plastic"] = math.random(6, 9),
     ["weed_nutrition"] = math.random(1, 2),
-	["raw_gold"] = math.random(2, 6),
+	["raw_gold"] = math.random(2, 8),
 }
 
 Config.Blips = {

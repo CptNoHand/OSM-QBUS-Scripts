@@ -413,7 +413,7 @@ Citizen.CreateThread(function()
 			end
 
 			if IsControlJustReleased(0, 38) and not isPickingUp then
-				if math.random(1,10) > 4 then 
+				if math.random(1,10) > 2 then 
 					FreezeEntityPosition(nearbycow, true)
 					TaskStartScenarioInPlace(playerPed, "PROP_HUMAN_PARKING_METER", 0, true)
 					MilkCow(nearbycow)
