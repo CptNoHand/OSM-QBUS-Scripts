@@ -58,8 +58,6 @@ Config.ItemList = {
     ["corn_packet"] = math.random(8, 12),
     ["milk_pack"] = math.random(8, 12),
 	["fruit_pack"] = math.random(8, 12),
-    ["diamond"] = math.random(12, 20),
-    ["emerald"] = math.random(12, 18),
     ["ironplate"] = math.random(6, 12),
     ["rubber"] = math.random(6, 9),
     ["steel"] = math.random(6, 9),
@@ -69,7 +67,6 @@ Config.ItemList = {
     ["metalscrap"] = math.random(6, 9),
     ["plastic"] = math.random(6, 9),
     ["weed_nutrition"] = math.random(1, 2),
-	["raw_gold"] = math.random(2, 8),
 }
 
 Config.Blips = {
