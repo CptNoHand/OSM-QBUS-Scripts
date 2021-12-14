@@ -253,7 +253,7 @@ Citizen.CreateThread(function()
 
                 seatBeltType = "belt"
 
-				local fuel = exports['LegacyFuel']:GetFuel(GetVehiclePedIsIn(GetPlayerPed(-1)))
+				local fuel = exports['cc-fuel']:GetFuel(GetVehiclePedIsIn(GetPlayerPed(-1)))
 				local mph = math.ceil(GetEntitySpeed(GetVehiclePedIsIn(PlayerPedId(), false)) * 3.6)
 
 				TriggerEvent("osm-carhud:carData", {gas = math.ceil(fuel), mph = mph, nos = nosData.amount})
@@ -279,7 +279,7 @@ Citizen.CreateThread(function()
 						time = hours .. ':' .. mins,
 						location = street,
 						speed = mph,
-						fuel = exports['LegacyFuel']:GetFuel(GetVehiclePedIsIn(GetPlayerPed(-1))),
+						fuel = exports['cc-fuel']:GetFuel(GetVehiclePedIsIn(GetPlayerPed(-1))),
 						cruise = cruisecontrol,
 						seatbelt = seatbeltState,
 						belttype = seatBeltType,
